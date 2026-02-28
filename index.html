@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeti Anusha | Full Stack Developer Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary: #6366f1;
+--primary-light: #818cf8;
+--accent: #f43f5e;
+--accent-glow: #fb7185;
+--dark-bg: #0f0f13;
+--card-bg: #18181b;
+--surface: #27272a;
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Inter', sans-serif;
+background: var(--dark-bg);
+color: #fafafa;
+overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Space Grotesk', sans-serif;
+}
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+}
+::-webkit-scrollbar-track {
+background: var(--dark-bg);
+}
+::-webkit-scrollbar-thumb {
+background: linear-gradient(180deg, var(--primary), var(--accent));
+border-radius: 4px;
+}
+/* Particle Canvas */
+#particles-canvas {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 0;
+pointer-events: none;
+}
+/* Gradient Text */
+.gradient-text {
+background: linear-gradient(135deg, var(--primary-light), var(--accent-glow));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+/* Glow Effects */
+.glow-primary {
+box-shadow: 0 0 30px rgba(99, 102, 241, 0.3), 0 0 60px rgba(99, 102, 241, 0.1);
+}
+/* Floating Animation */
+@keyframes float {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-20px); }
+}
+.floating {
+animation: float 6s ease-in-out infinite;
+}
+/* Pulse Glow */
+@keyframes pulse-glow {
+0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6), 0 0 60px rgba(244, 63, 94, 0.3); }
+}
+.pulse-glow {
+animation: pulse-glow 3s ease-in-out infinite;
+}
+/* Skill Badge Float */
+@keyframes badge-float {
+0%, 100% { transform: translateY(0) rotate(0deg); }
+25% { transform: translateY(-5px) rotate(1deg); }
+75% { transform: translateY(5px) rotate(-1deg); }
+}
+/* Typing Cursor */
+.typing-cursor {
+display: inline-block;
+width: 3px;
+height: 1em;
+background: var(--primary-light);
+margin-left: 5px;
+animation: blink 1s infinite;
+}
+@keyframes blink {
+0%, 50% { opacity: 1; }
+51%, 100% { opacity: 0; }
+}
+/* Card Hover Effects */
+.project-card {
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+transform-style: preserve-3d;
+}
+.project-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+}
+/* Timeline Line */
+.timeline-line {
+background: linear-gradient(180deg, var(--primary), var(--accent), transparent);
+}
+/* Magnetic Button */
+.magnetic-btn {
+transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Glass Effect */
+.glass {
+background: rgba(24, 24, 27, 0.7);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* Grid Pattern */
+.grid-pattern {
+background-image: linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+background-size: 60px 60px;
+}
+/* Reveal Animation Classes */
+.reveal-up {
+opacity: 0;
+transform: translateY(30px);
+}
+.reveal-left {
+opacity: 0;
+transform: translateX(-30px);
+}
+.reveal-right {
+opacity: 0;
+transform: translateX(30px);
+}
+.reveal-scale {
+opacity: 0;
+transform: scale(0.9);
+}
+/* Navigation Active State */
+.nav-link {
+position: relative;
+color: #a1a1aa;
+transition: color 0.3s;
+}
+.nav-link:hover, .nav-link.active {
+color: #fafafa;
+}
+.nav-link::after {
+content: '';
+position: absolute;
+bottom: -5px;
+left: 0;
+width: 0;
+height: 2px;
+background: linear-gradient(90deg, var(--primary), var(--accent));
+transition: width 0.3s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+width: 100%;
+}
+/* Custom Selection */
+::selection {
+background: var(--primary);
+color: white;
+}
+/* Gradient Border */
+.gradient-border {
+position: relative;
+background: var(--card-bg);
+border-radius: 1rem;
+}
+.gradient-border::before {
+content: '';
+position: absolute;
+inset: -1px;
+border-radius: 1rem;
+padding: 1px;
+background: linear-gradient(135deg, var(--primary), var(--accent));
+-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+opacity: 0.5;
+transition: opacity 0.3s;
+}
+.gradient-border:hover::before {
+opacity: 1;
+}
+</style>
+</head>
+<body class="grid-pattern">
+
+<!-- Particle Canvas -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="#hero" class="text-2xl font-bold gradient-text tracking-tighter">
+<i class="fas fa-code"></i> Seeti Anusha
+</a>
+<!-- Desktop Menu -->
+<div class="hidden md:flex space-x-8">
+<a href="#hero" class="nav-link text-sm uppercase tracking-widest">
+<i class="fas fa-home mr-1"></i> Home
+</a>
+<a href="#about" class="nav-link text-sm uppercase tracking-widest">
+<i class="fas fa-user mr-1"></i> About
+</a>
+<a href="#skills" class="nav-link text-sm uppercase tracking-widest">
+<i class="fas fa-tools mr-1"></i> Skills
+</a>
+<a href="#projects" class="nav-link text-sm uppercase tracking-widest">
+<i class="fas fa-project-diagram mr-1"></i> Projects
+</a>
+<a href="#contact" class="nav-link text-sm uppercase tracking-widest">
+<i class="fas fa-envelope mr-1"></i> Contact
+</a>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-white" onclick="toggleMobileMenu()">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden md:hidden glass border-t border-white/10">
+<div class="flex flex-col space-y-4 px-6 py-6">
+<a href="#hero" class="text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors" onclick="toggleMobileMenu()">
+<i class="fas fa-home mr-2"></i> Home
+</a>
+<a href="#about" class="text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors" onclick="toggleMobileMenu()">
+<i class="fas fa-user mr-2"></i> About
+</a>
+<a href="#skills" class="text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors" onclick="toggleMobileMenu()">
+<i class="fas fa-tools mr-2"></i> Skills
+</a>
+<a href="#projects" class="text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors" onclick="toggleMobileMenu()">
+<i class="fas fa-project-diagram mr-2"></i> Projects
+</a>
+<a href="#contact" class="text-sm uppercase tracking-widest text-gray-300 hover:text-white transition-colors" onclick="toggleMobileMenu()">
+<i class="fas fa-envelope mr-2"></i> Contact
+</a>
+</div>
+</div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<div class="absolute inset-0 bg-gradient-to-b from-indigo-900/10 via-transparent to-rose-900/10"></div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+<!-- Pre-title -->
+<div class="reveal-up mb-6">
+<span class="inline-block px-4 py-2 rounded-full glass text-indigo-300 text-sm font-medium tracking-wider border border-indigo-500/30">
+<i class="fas fa-check-circle mr-2"></i> Available for Work
+</span>
+</div>
+<!-- Main Title -->
+<h1 class="reveal-up text-5xl md:text-7xl lg:text-9xl font-bold mb-6 leading-tight">
+<span class="block text-white">SEETI ANUSHA</span>
+<span class="block gradient-text">FULL STACK DEVELOPER</span>
+</h1>
+<!-- Typing Effect -->
+<div class="reveal-up h-8 mb-8">
+<span id="typing-text" class="text-xl md:text-2xl text-gray-400 font-light"></span>
+<span class="typing-cursor"></span>
+</div>
+<!-- Location/Tagline -->
+<p class="reveal-up text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+<i class="fas fa-map-marker-alt mr-2"></i> Building scalable web applications end-to-end • Based in India • Open to Remote Opportunities
+</p>
+<!-- CTA Buttons -->
+<div class="reveal-up flex flex-col sm:flex-row gap-4 justify-center items-center">
+<a href="#projects" class="magnetic-btn group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-rose-600 rounded-full font-semibold text-white overflow-hidden transition-all hover:scale-105 glow-primary">
+<span class="relative z-10"><i class="fas fa-briefcase mr-2"></i> View My Work</span>
+<div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</a>
+<a href="#contact" class="magnetic-btn px-8 py-4 border border-white/20 rounded-full font-semibold text-white hover:bg-white/5 transition-all hover:scale-105">
+<i class="fas fa-paper-plane mr-2"></i> Get In Touch
+</a>
+</div>
+<!-- Floating Tech Icons -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="floating absolute top-20 left-10 w-16 h-16 glass rounded-2xl flex items-center justify-center text-indigo-400 opacity-20" style="animation-delay: 0s;">
+<i class="fas fa-layer-group text-3xl"></i>
+</div>
+<div class="floating absolute top-40 right-20 w-20 h-20 glass rounded-2xl flex items-center justify-center text-rose-400 opacity-20" style="animation-delay: 1s;">
+<i class="fas fa-laptop-code text-4xl"></i>
+</div>
+<div class="floating absolute bottom-32 left-20 w-14 h-14 glass rounded-2xl flex items-center justify-center text-purple-400 opacity-20" style="animation-delay: 2s;">
+<i class="fas fa-database text-2xl"></i>
+</div>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+<i class="fas fa-chevron-down text-2xl text-indigo-400"></i>
+</div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="relative py-32 overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-16 items-center">
+<!-- Image/Visual Side -->
+<div class="reveal-left relative">
+<div class="relative w-full aspect-square max-w-md mx-auto">
+<!-- Animated Rings -->
+<div class="absolute inset-0 border-2 border-indigo-500/20 rounded-full animate-spin" style="animation-duration: 20s;"></div>
+<div class="absolute inset-4 border-2 border-purple-500/20 rounded-full animate-spin" style="animation-duration: 15s; animation-direction: reverse;"></div>
+<div class="absolute inset-8 border-2 border-rose-500/20 rounded-full animate-spin" style="animation-duration: 25s;"></div>
+<!-- Center Content -->
+<div class="absolute inset-12 glass rounded-full flex items-center justify-center pulse-glow">
+<div class="text-center">
+<div class="text-6xl font-bold gradient-text mb-2">1.5+</div>
+<div class="text-sm text-gray-400 uppercase tracking-widest">Years Exp.</div>
+</div>
+</div>
+<!-- Floating Badges -->
+<div class="absolute -right-4 top-1/4 glass px-4 py-2 rounded-full border border-indigo-500/30 floating" style="animation-delay: 0.5s;">
+<span class="text-indigo-300 text-sm font-semibold"><i class="fas fa-palette mr-1"></i> Frontend</span>
+</div>
+<div class="absolute -left-4 bottom-1/3 glass px-4 py-2 rounded-full border border-rose-500/30 floating" style="animation-delay: 1s;">
+<span class="text-rose-300 text-sm font-semibold"><i class="fas fa-server mr-1"></i> Backend</span>
+</div>
+</div>
+</div>
+<!-- Content Side -->
+<div class="reveal-right">
+<h2 class="text-sm uppercase tracking-widest text-indigo-400 mb-4">
+<i class="fas fa-user-circle mr-2"></i> About Me
+</h2>
+<h3 class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-white">
+Crafting Digital <span class="gradient-text">Experiences</span> That Matter
+</h3>
+<p class="text-gray-400 text-lg mb-6 leading-relaxed">
+I'm a passionate Full Stack Developer with expertise in building complete web applications from concept to deployment. I specialize in creating scalable, high-performance solutions that solve real-world problems.
+</p>
+<p class="text-gray-400 text-lg mb-8 leading-relaxed">
+From real-time video translation platforms to comprehensive ERP systems, I bring ideas to life with clean code and intuitive design. My approach combines technical excellence with user-centered thinking.
+</p>
+<!-- Quick Stats -->
+<div class="grid grid-cols-3 gap-4">
+<div class="text-center p-4 glass rounded-xl">
+<div class="text-2xl font-bold gradient-text mb-1">15+</div>
+<div class="text-xs text-gray-400">Projects</div>
+</div>
+<div class="text-center p-4 glass rounded-xl">
+<div class="text-2xl font-bold gradient-text mb-1">100+</div>
+<div class="text-xs text-gray-400">APIs Built</div>
+</div>
+<div class="text-center p-4 glass rounded-xl">
+<div class="text-2xl font-bold gradient-text mb-1">50+</div>
+<div class="text-xs text-gray-400">Languages</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="relative py-32 overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-20 reveal-up">
+<h2 class="text-sm uppercase tracking-widest text-indigo-400 mb-4">
+<i class="fas fa-cogs mr-2"></i> Technical Arsenal
+</h2>
+<h3 class="text-4xl md:text-5xl font-bold text-white">
+Skills & <span class="gradient-text">Technologies</span>
+</h3>
+</div>
+<!-- Skills Categories -->
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Frontend -->
+<div class="reveal-up group">
+<div class="gradient-border p-8 h-full transition-all duration-500 hover:transform hover:-translate-y-2">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<i class="fas fa-laptop-code text-4xl text-indigo-400"></i>
+</div>
+<h4 class="text-2xl font-bold mb-4 text-white">Frontend</h4>
+<div class="flex flex-wrap gap-2">
+<span class="skill-badge px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/20 transition-all cursor-default">
+<i class="fab fa-react mr-1"></i> React
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/20 transition-all cursor-default">
+<i class="fab fa-js mr-1"></i> TypeScript
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/20 transition-all cursor-default">
+<i class="fas fa-wind mr-1"></i> Tailwind CSS
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/20 transition-all cursor-default">
+<i class="fas fa-forward mr-1"></i> Next.js
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/20 transition-all cursor-default">
+<i class="fas fa-film mr-1"></i> Framer Motion
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/20 transition-all cursor-default">
+<i class="fab fa-html5 mr-1"></i> HTML5/CSS3
+</span>
+</div>
+</div>
+</div>
+<!-- Backend -->
+<div class="reveal-up group" style="animation-delay: 0.1s;">
+<div class="gradient-border p-8 h-full transition-all duration-500 hover:transform hover:-translate-y-2">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<i class="fas fa-server text-4xl text-purple-400"></i>
+</div>
+<h4 class="text-2xl font-bold mb-4 text-white">Backend</h4>
+<div class="flex flex-wrap gap-2">
+<span class="skill-badge px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/20 transition-all cursor-default">
+<i class="fab fa-node-js mr-1"></i> Node.js
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/20 transition-all cursor-default">
+<i class="fas fa-bolt mr-1"></i> Express
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/20 transition-all cursor-default">
+<i class="fab fa-python mr-1"></i> Python
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/20 transition-all cursor-default">
+<i class="fas fa-d mr-1"></i> Django
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/20 transition-all cursor-default">
+<i class="fas fa-plug mr-1"></i> Socket.IO
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/20 transition-all cursor-default">
+<i class="fas fa-exchange-alt mr-1"></i> REST APIs
+</span>
+</div>
+</div>
+</div>
+<!-- Database & Tools -->
+<div class="reveal-up group" style="animation-delay: 0.2s;">
+<div class="gradient-border p-8 h-full transition-all duration-500 hover:transform hover:-translate-y-2">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500/20 to-orange-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<i class="fas fa-database text-4xl text-rose-400"></i>
+</div>
+<h4 class="text-2xl font-bold mb-4 text-white">Database & Tools</h4>
+<div class="flex flex-wrap gap-2">
+<span class="skill-badge px-4 py-2 rounded-full bg-rose-500/10 text-rose-300 text-sm border border-rose-500/30 hover:bg-rose-500/20 transition-all cursor-default">
+<i class="fas fa-leaf mr-1"></i> MongoDB
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-rose-500/10 text-rose-300 text-sm border border-rose-500/30 hover:bg-rose-500/20 transition-all cursor-default">
+<i class="fas fa-elephant mr-1"></i> PostgreSQL
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-rose-500/10 text-rose-300 text-sm border border-rose-500/30 hover:bg-rose-500/20 transition-all cursor-default">
+<i class="fas fa-database mr-1"></i> MySQL
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-rose-500/10 text-rose-300 text-sm border border-rose-500/30 hover:bg-rose-500/20 transition-all cursor-default">
+<i class="fab fa-git-alt mr-1"></i> Git
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-rose-500/10 text-rose-300 text-sm border border-rose-500/30 hover:bg-rose-500/20 transition-all cursor-default">
+<i class="fab fa-docker mr-1"></i> Docker
+</span>
+<span class="skill-badge px-4 py-2 rounded-full bg-rose-500/10 text-rose-300 text-sm border border-rose-500/30 hover:bg-rose-500/20 transition-all cursor-default">
+<i class="fas fa-video mr-1"></i> WebRTC
+</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Experience Timeline -->
+<div class="mt-24">
+<h3 class="text-3xl font-bold text-center mb-12 reveal-up text-white">
+Experience <span class="gradient-text">Timeline</span>
+</h3>
+<div class="relative max-w-4xl mx-auto">
+<div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full timeline-line rounded-full"></div>
+<!-- Timeline Item 1 -->
+<div class="relative mb-12 reveal-left">
+<div class="flex items-center justify-end md:justify-between">
+<div class="hidden md:block w-5/12"></div>
+<div class="w-4 h-4 rounded-full bg-indigo-500 absolute left-1/2 transform -translate-x-1/2 pulse-glow"></div>
+<div class="w-full md:w-5/12 glass rounded-2xl p-6 border border-indigo-500/20 ml-auto md:ml-0">
+<span class="text-indigo-400 text-sm font-semibold">
+<i class="fas fa-calendar-alt mr-1"></i> 2023 - Present
+</span>
+<h4 class="text-xl font-bold text-white mt-2">Full Stack Developer</h4>
+<p class="text-gray-400 mt-2">Building enterprise-grade applications with React, Node.js, and cloud technologies.</p>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative reveal-right">
+<div class="flex items-center justify-start md:justify-between">
+<div class="w-full md:w-5/12 glass rounded-2xl p-6 border border-rose-500/20">
+<span class="text-rose-400 text-sm font-semibold">
+<i class="fas fa-calendar-alt mr-1"></i> 2022 - 2023
+</span>
+<h4 class="text-xl font-bold text-white mt-2">Junior Developer</h4>
+<p class="text-gray-400 mt-2">Started journey with web development, mastering fundamentals and building foundational skills.</p>
+</div>
+<div class="w-4 h-4 rounded-full bg-rose-500 absolute left-1/2 transform -translate-x-1/2 pulse-glow"></div>
+<div class="hidden md:block w-5/12"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="relative py-32 overflow-hidden">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-20 reveal-up">
+<h2 class="text-sm uppercase tracking-widest text-indigo-400 mb-4">
+<i class="fas fa-rocket mr-2"></i> Featured Work
+</h2>
+<h3 class="text-4xl md:text-5xl font-bold text-white">
+Recent <span class="gradient-text">Projects</span>
+</h3>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Project 1: Video Translation -->
+<div class="project-card reveal-up group relative glass rounded-3xl overflow-hidden border border-white/10">
+<div class="absolute inset-0 bg-gradient-to-b from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+<i class="fas fa-video text-white text-xl"></i>
+</div>
+<span class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 text-xs border border-indigo-500/30">
+<i class="fas fa-circle text-green-400 mr-1 animate-pulse"></i> Live
+</span>
+</div>
+<h4 class="text-2xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">
+Video Translation Platform
+</h4>
+<p class="text-gray-400 text-sm mb-4 line-clamp-3">
+WebRTC-based video conferencing with real-time speech translation across 50+ languages. Features Google OAuth, credit system, and screen sharing.
+</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-xs text-indigo-300 bg-indigo-500/10 px-2 py-1 rounded">
+<i class="fab fa-react mr-1"></i> React
+</span>
+<span class="text-xs text-indigo-300 bg-indigo-500/10 px-2 py-1 rounded">
+<i class="fab fa-node-js mr-1"></i> Node.js
+</span>
+<span class="text-xs text-indigo-300 bg-indigo-500/10 px-2 py-1 rounded">
+<i class="fas fa-video mr-1"></i> WebRTC
+</span>
+<span class="text-xs text-indigo-300 bg-indigo-500/10 px-2 py-1 rounded">
+<i class="fas fa-plug mr-1"></i> Socket.IO
+</span>
+</div>
+<a href="https://googlemeet-frontend.vercel.app/" target="_blank" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 transition-colors group/link">
+<i class="fas fa-external-link-alt mr-2"></i> View Project 
+<i class="fas fa-arrow-right ml-2 transform group-hover/link:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+</div>
+
+<!-- Project 2: ERP System -->
+<div class="project-card reveal-up group relative glass rounded-3xl overflow-hidden border border-white/10" style="animation-delay: 0.1s;">
+<div class="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+<i class="fas fa-calculator text-white text-xl"></i>
+</div>
+<span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 text-xs border border-purple-500/30">
+<i class="fas fa-building mr-1"></i> Enterprise
+</span>
+</div>
+<h4 class="text-2xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
+ERP Management System
+</h4>
+<p class="text-gray-400 text-sm mb-4 line-clamp-3">
+Comprehensive ERP for SMBs with inventory, accounting, purchases, sales, and multi-register cash management. 15+ modules, 100+ APIs.
+</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-xs text-purple-300 bg-purple-500/10 px-2 py-1 rounded">
+<i class="fab fa-js mr-1"></i> TypeScript
+</span>
+<span class="text-xs text-purple-300 bg-purple-500/10 px-2 py-1 rounded">
+<i class="fas fa-database mr-1"></i> PostgreSQL
+</span>
+<span class="text-xs text-purple-300 bg-purple-500/10 px-2 py-1 rounded">
+<i class="fab fa-react mr-1"></i> React
+</span>
+<span class="text-xs text-purple-300 bg-purple-500/10 px-2 py-1 rounded">
+<i class="fab fa-node-js mr-1"></i> Node.js
+</span>
+</div>
+<a href="#" class="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors group/link">
+<i class="fas fa-info-circle mr-2"></i> View Project 
+<i class="fas fa-arrow-right ml-2 transform group-hover/link:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="h-1 w-full bg-gradient-to-r from-purple-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+</div>
+
+<!-- Project 3: GlowJewels -->
+<div class="project-card reveal-up group relative glass rounded-3xl overflow-hidden border border-white/10" style="animation-delay: 0.2s;">
+<div class="absolute inset-0 bg-gradient-to-b from-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-600 to-orange-600 flex items-center justify-center">
+<i class="fas fa-shopping-bag text-white text-xl"></i>
+</div>
+<span class="px-3 py-1 rounded-full bg-rose-500/10 text-rose-300 text-xs border border-rose-500/30">
+<i class="fas fa-store mr-1"></i> E-Commerce
+</span>
+</div>
+<h4 class="text-2xl font-bold text-white mb-2 group-hover:text-rose-300 transition-colors">
+GlowJewels Store
+</h4>
+<p class="text-gray-400 text-sm mb-4 line-clamp-3">
+Elegant jewelry e-commerce with Amazon affiliate integration. Features 35+ products, responsive design, and conversion-optimized UX with Framer Motion animations.
+</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<span class="text-xs text-rose-300 bg-rose-500/10 px-2 py-1 rounded">
+<i class="fab fa-react mr-1"></i> React
+</span>
+<span class="text-xs text-rose-300 bg-rose-500/10 px-2 py-1 rounded">
+<i class="fas fa-wind mr-1"></i> Tailwind
+</span>
+<span class="text-xs text-rose-300 bg-rose-500/10 px-2 py-1 rounded">
+<i class="fas fa-bolt mr-1"></i> Vite
+</span>
+<span class="text-xs text-rose-300 bg-rose-500/10 px-2 py-1 rounded">
+<i class="fas fa-link mr-1"></i> Affiliate
+</span>
+</div>
+<a href="https://glow-jewels.vercel.app/" target="_blank" class="inline-flex items-center text-rose-400 hover:text-rose-300 transition-colors group/link">
+<i class="fas fa-external-link-alt mr-2"></i> View Project 
+<i class="fas fa-arrow-right ml-2 transform group-hover/link:translate-x-1 transition-transform"></i>
+</a>
+</div>
+<div class="h-1 w-full bg-gradient-to-r from-rose-600 to-orange-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="relative py-32 overflow-hidden">
+<div class="max-w-4xl mx-auto px-6 text-center">
+<div class="reveal-up">
+<h2 class="text-sm uppercase tracking-widest text-indigo-400 mb-4">
+<i class="fas fa-paper-plane mr-2"></i> Get In Touch
+</h2>
+<h3 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+Let's Create <span class="gradient-text">Something Amazing</span>
+</h3>
+<p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+I'm currently available for freelance projects and full-time opportunities. Let's discuss how we can work together to bring your ideas to life.
+</p>
+</div>
+<!-- Contact Cards -->
+<div class="grid md:grid-cols-3 gap-6 mb-16">
+<a href="https://github.com" target="_blank" class="reveal-up group glass rounded-2xl p-6 border border-white/10 hover:border-indigo-500/50 transition-all duration-300 hover:transform hover:-translate-y-2">
+<div class="w-14 h-14 rounded-full bg-indigo-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+<i class="fab fa-github text-3xl text-indigo-400"></i>
+</div>
+<h4 class="text-lg font-bold text-white mb-1">GitHub</h4>
+<p class="text-gray-400 text-sm">View my code</p>
+</a>
+<a href="https://www.linkedin.com/company/octanetsolutions/" target="_blank" class="reveal-up group glass rounded-2xl p-6 border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" style="animation-delay: 0.1s;">
+<div class="w-14 h-14 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+<i class="fab fa-linkedin text-3xl text-purple-400"></i>
+</div>
+<h4 class="text-lg font-bold text-white mb-1">LinkedIn</h4>
+<p class="text-gray-400 text-sm">Connect professionally</p>
+</a>
+<a href="mailto:seetianusha@example.com" class="reveal-up group glass rounded-2xl p-6 border border-white/10 hover:border-rose-500/50 transition-all duration-300 hover:transform hover:-translate-y-2" style="animation-delay: 0.2s;">
+<div class="w-14 h-14 rounded-full bg-rose-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+<i class="fas fa-envelope text-3xl text-rose-400"></i>
+</div>
+<h4 class="text-lg font-bold text-white mb-1">Email</h4>
+<p class="text-gray-400 text-sm">Drop me a line</p>
+</a>
+</div>
+<!-- CTA -->
+<div class="reveal-up">
+<a href="mailto:seetianusha@example.com" class="magnetic-btn inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-600 to-rose-600 rounded-full font-semibold text-white text-lg hover:scale-105 transition-transform glow-primary">
+<i class="fas fa-rocket mr-2"></i> Start a Project
+<i class="fas fa-arrow-right ml-2"></i>
+</a>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="relative py-12 border-t border-white/10">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+<div class="text-2xl font-bold gradient-text mb-4 md:mb-0">
+<i class="fas fa-code"></i> Seeti Anusha
+</div>
+<p class="text-gray-500 text-sm">
+© 2024 All rights reserved. Built with passion & code.
+</p>
+<div class="flex space-x-6 mt-4 md:mt-0">
+<a href="https://github.com" target="_blank" class="text-gray-400 hover:text-indigo-400 transition-colors">
+<i class="fab fa-github text-xl"></i>
+</a>
+<a href="https://www.linkedin.com/company/octanetsolutions/" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+<i class="fab fa-linkedin text-xl"></i>
+</a>
+<a href="mailto:seetianusha@example.com" class="text-gray-400 hover:text-rose-400 transition-colors">
+<i class="fas fa-envelope text-xl"></i>
+</a>
+</div>
+</div>
+</footer>
+
+<script>
+// Register GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Particle System
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: null, y: null, radius: 150 };
+
+function resizeCanvas() {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+constructor() {
+this.x = Math.random() * canvas.width;
+this.y = Math.random() * canvas.height;
+this.size = Math.random() * 2 + 0.5;
+this.speedX = Math.random() * 0.5 - 0.25;
+this.speedY = Math.random() * 0.5 - 0.25;
+this.color = Math.random() > 0.5 ? '#6366f1' : '#f43f5e';
+this.opacity = Math.random() * 0.5 + 0.2;
+}
+update() {
+this.x += this.speedX;
+this.y += this.speedY;
+if (this.x > canvas.width) this.x = 0;
+if (this.x < 0) this.x = canvas.width;
+if (this.y > canvas.height) this.y = 0;
+if (this.y < 0) this.y = canvas.height;
+// Mouse interaction
+let dx = mouse.x - this.x;
+let dy = mouse.y - this.y;
+let distance = Math.sqrt(dx * dx + dy * dy);
+if (distance < mouse.radius) {
+const forceDirectionX = dx / distance;
+const forceDirectionY = dy / distance;
+const force = (mouse.radius - distance) / mouse.radius;
+const directionX = forceDirectionX * force * 2;
+const directionY = forceDirectionY * force * 2;
+this.x -= directionX;
+this.y -= directionY;
+}
+}
+draw() {
+ctx.fillStyle = this.color;
+ctx.globalAlpha = this.opacity;
+ctx.beginPath();
+ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+ctx.fill();
+}
+}
+
+function initParticles() {
+particles = [];
+for (let i = 0; i < 80; i++) {
+particles.push(new Particle());
+}
+}
+initParticles();
+
+function animateParticles() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+for (let i = 0; i < particles.length; i++) {
+particles[i].update();
+particles[i].draw();
+// Draw connections
+for (let j = i; j < particles.length; j++) {
+let dx = particles[i].x - particles[j].x;
+let dy = particles[i].y - particles[j].y;
+let distance = Math.sqrt(dx * dx + dy * dy);
+if (distance < 120) {
+ctx.beginPath();
+ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - distance/120)})`;
+ctx.lineWidth = 0.5;
+ctx.moveTo(particles[i].x, particles[i].y);
+ctx.lineTo(particles[j].x, particles[j].y);
+ctx.stroke();
+}
+}
+}
+requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+window.addEventListener('mousemove', (e) => {
+mouse.x = e.x;
+mouse.y = e.y;
+});
+
+// Typing Effect
+const typingText = document.getElementById('typing-text');
+const phrases = [
+"React & Node.js Expert",
+"WebRTC & Real-time Systems",
+"Database Architecture Specialist",
+"Full Stack Problem Solver"
+];
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeEffect() {
+const currentPhrase = phrases[phraseIndex];
+if (isDeleting) {
+typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+charIndex--;
+} else {
+typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+charIndex++;
+}
+let typeSpeed = isDeleting ? 50 : 100;
+if (!isDeleting && charIndex === currentPhrase.length) {
+typeSpeed = 2000;
+isDeleting = true;
+} else if (isDeleting && charIndex === 0) {
+isDeleting = false;
+phraseIndex = (phraseIndex + 1) % phrases.length;
+typeSpeed = 500;
+}
+setTimeout(typeEffect, typeSpeed);
+}
+typeEffect();
+
+// Scroll Animations with GSAP
+const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale');
+revealElements.forEach((element) => {
+gsap.to(element, {
+scrollTrigger: {
+trigger: element,
+start: 'top 85%',
+toggleActions: 'play none none reverse'
+},
+opacity: 1,
+x: 0,
+y: 0,
+scale: 1,
+duration: 0.8,
+ease: 'power3.out'
+});
+});
+
+// Navigation Scroll Effect
+const navbar = document.getElementById('navbar');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+const currentScroll = window.pageYOffset;
+if (currentScroll > 100) {
+navbar.classList.add('glass');
+navbar.style.background = 'rgba(15, 15, 19, 0.9)';
+} else {
+navbar.style.background = 'transparent';
+}
+lastScroll = currentScroll;
+});
+
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+const menu = document.getElementById('mobile-menu');
+menu.classList.toggle('hidden');
+}
+
+// Smooth Scroll for Navigation Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+const target = document.querySelector(this.getAttribute('href'));
+if (target) {
+target.scrollIntoView({
+behavior: 'smooth',
+block: 'start'
+});
+}
+});
+});
+
+// Magnetic Button Effect
+const magneticBtns = document.querySelectorAll('.magnetic-btn');
+magneticBtns.forEach(btn => {
+btn.addEventListener('mousemove', (e) => {
+const rect = btn.getBoundingClientRect();
+const x = e.clientX - rect.left - rect.width / 2;
+const y = e.clientY - rect.top - rect.height / 2;
+btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+});
+btn.addEventListener('mouseleave', () => {
+btn.style.transform = 'translate(0, 0)';
+});
+});
+
+// Skill Badges Random Float Animation
+const skillBadges = document.querySelectorAll('.skill-badge');
+skillBadges.forEach((badge, index) => {
+badge.style.animation = `badge-float ${4 + Math.random() * 2}s ease-in-out infinite`;
+badge.style.animationDelay = `${index * 0.1}s`;
+});
+
+// Active Navigation Link
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+let current = '';
+sections.forEach(section => {
+const sectionTop = section.offsetTop;
+const sectionHeight = section.clientHeight;
+if (pageYOffset >= sectionTop - 200) {
+current = section.getAttribute('id');
+}
+});
+navLinks.forEach(link => {
+link.classList.remove('active');
+if (link.getAttribute('href').slice(1) === current) {
+link.classList.add('active');
+}
+});
+});
+
+// Parallax Effect for Hero
+window.addEventListener('scroll', () => {
+const scrolled = window.pageYOffset;
+const hero = document.getElementById('hero');
+if (hero) {
+hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+}
+});
+</script>
+
+</body>
+</html>
